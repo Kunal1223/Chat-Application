@@ -3,7 +3,10 @@
     "start": "nodemon Server.js"
   },
   "dependencies": {
+    "color": "^4.2.3",
+    "colors": "^1.4.0",
     "dotenv": "^16.3.1",
+    "express-async-handler": "^1.2.0",
     "express.js": "^1.0.0",
     "mongoose": "^7.5.0"
   }
