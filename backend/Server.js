@@ -7,12 +7,15 @@ const userRouter = require("./route/userRoute")
 const app = express();
 dotenv.config();
 Connection();
+app.use(express.json());
 
 app.get('/' , (req,res)=>{
     res.send("This is about page by me");
 })
 
-app.use('/api/user', userRouter)
+app.use('/api/user', userRouter);
+
+
 
 PORT = process.env.PORT
 app.listen(PORT, (req , res) =>{  
