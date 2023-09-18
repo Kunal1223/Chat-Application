@@ -37,7 +37,7 @@ const registerUser = asynchandler(async (req, res) => {
     } else {
         res.status(400);
         throw Error("User not found");
-    }
+    } 
 });
 
 const loginUser = async (req, res) => {
