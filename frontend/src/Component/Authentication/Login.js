@@ -3,32 +3,51 @@ import React, { useState } from 'react'
 
 const Login = () => {
 
-  const [Email, setEmail] = useState();
-  const [Password, setPassword] = useState();
-  const [Cpassword, setCpassword] = useState();
+  const [userInfor , setuserInfor] = useState({email:"" , password: ""})
   const [show, setShow] = useState(false);
-  const [cshow, setcShow] = useState(false);
 
   const handleClick = () =>setShow(!show);
-  const handleClick1 = () =>setcShow(!cshow);
+  const onchange = (e) =>{
+    setuserInfor({...userInfor , [e.target.name]:e.target.value})
+  }
+
+  const handleSubmit = async(e) =>{
+    e.preventDefault();
+
+    const response = await fetch('http://localhost:5000/api/user/login',{
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email: userInfor.email, password: userInfor.password })
+    });
+
+    const json = await response.json();
+
+    if(response.ok){
+      alert("Login Successfully😎")
+    }else{
+      alert(json.error || "Registration failed");
+    }
+  }  
 
   return (
     <VStack spacing="15px">
     <FormControl id="email" isRequired>
       <FormLabel>Email Address</FormLabel>
       <Input
-        type="email"
+        type="email" name='email' value={userInfor.email}
         placeholder="Enter Your Email Address"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={onchange}
       />
     </FormControl>
     <FormControl id="password" isRequired>
       <FormLabel>Password</FormLabel>
       <InputGroup size="md">
         <Input
-          type={show ? "text" : "password"}
-          placeholder="Enter Password"
-          onChange={(e) => setPassword(e.target.value)}
+          type={show ? "text" : "password"} value={userInfor.password}
+          placeholder="Enter Password" name='password'
+          onChange={onchange}
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -40,7 +59,7 @@ const Login = () => {
     <Button
       colorScheme="red"
       width="100%"
-      style={{ marginTop: 15 }}
+      style={{ marginTop: 15 }} onClick={handleSubmit}
     >
       Log in
     </Button>
