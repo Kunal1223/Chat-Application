@@ -38,6 +38,8 @@ const registerUser = asynchandler(async (req, res) => {
     }
 });
 
+// ########################## login user ################################
+
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
@@ -57,7 +59,7 @@ const loginUser = async (req, res) => {
                 password: user.password,
                 token: generateToken(user._id),
                 success: true,
-            });
+            }); 
         } else {
             return res.status(400).json({ success: false, error: "Email or Password does not match" });
         }
@@ -66,5 +68,13 @@ const loginUser = async (req, res) => {
     }
 };
  
-module.exports = { registerUser, loginUser };
+
+// ################## search user ###############################
+
+const allUser = asynchandler(async(req, res) => {
+        const keyword = req.query.search
+        console.log(keyword)
+});
+
+module.exports = { registerUser, loginUser , allUser };
  
